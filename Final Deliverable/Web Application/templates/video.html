@@ -1,0 +1,260 @@
+<html>
+	<head>
+	<title>Early Detection of Forest Fires</title>
+	
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href='https://fonts.googleapis.com/css?family=Josefin Sans' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet'>
+	<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<style>
+		.header {	
+			top:0px;	
+			margin:0px;
+			left: 0px;
+			right: 0px;
+			position: fixed;
+			background: #161616;
+			text-transform:uppercase;
+			letter-spacing:3px;
+			color: white;
+			overflow: hidden;
+			padding-bottom: 10px;
+			font-size: 2.25vw;
+			width: 100%;
+			padding-left:0px;
+			text-align: center;
+			padding-top:5px;
+			font-family: 'Merriweather';
+		}
+		.second{
+			top:60px;
+			bottom:0px;
+			margin:0px;
+			left: 0px;
+			right: 0%;
+			position: absolute;
+			padding: 0px;
+			width: 100%;
+			
+			background-image:url({{url_for('static',filename="images/12.png")}}); 
+			background-repeat:no-repeat;
+			background-size: cover;
+			background-position:center;
+			background-attachment:absolute;
+			
+		}
+		.inside{
+			top:7%;
+			bottom:0px;
+			margin:0px;
+			left: 5%;
+			right: 55%;
+			position: absolute;
+			padding-left: 40px;
+			padding-top:8%;
+			padding-right:5%;
+			background-color:transparent;
+			font-family:Merriweather;
+			color:#563F31;
+			font-size:18px;
+			text-align:justify;
+			line-height:32px;
+	margin:auto;
+	overflow:hidden;
+		}
+		.myButton{
+			  border: none;
+			  text-align: center;
+			  cursor: pointer;
+			  text-transform: uppercase;
+			  outline: none;
+			  overflow: hidden;
+			  color: #fff;
+			  font-weight: 700;
+			  font-size: 12px;
+			  background-color: #161616;
+			  padding: 10px 15px;
+			  margin: 0 auto;
+			  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+		}
+	.predictimg{
+		background-image:url({{url_for('static',filename="images/img.png")}}); 
+			background-repeat:no-repeat;
+			background-size: cover;
+			background-position:center;
+			background-attachment:absolute;
+	height:100%;
+	margin-top:49.6%;
+	text-align:center;
+	}
+	#showcase{
+	height:300px;
+	margin-bottom:30px;
+}
+html {
+  scroll-behavior: smooth;
+}
+#main{
+	float:center;
+	color:black;
+	width:100%;
+	padding:0 30px;
+	padding-top:7%;
+	box-sizing: border-box;
+	font-family:Georgia, serif;
+	text-align:center;
+}
+
+
+
+
+#sidebar{
+	float:right;
+	width:50%;
+	background-color: transparent;
+	color:#000;
+	font-family:Georgia, serif;
+	padding-left:0px;
+	padding-right:0px;
+	padding-top:1px;
+	box-sizing: border-box;
+}	
+.img-preview {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    border: 5px solid #F8F8F8;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+    margin-top: 1em;
+    margin-bottom: 1em; 
+}
+
+.img-preview>div {
+    width: 100%;
+    height: 100%;
+    background-size: 300px 300px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload-label{
+    display: inline-block;
+    padding: 12px 30px;
+    background: #161616;
+    color: #fff;
+    font-size: 1em;
+    transition: all .4s;
+    cursor: pointer;
+	font-weight:bold;
+}
+
+.upload-label:hover{
+    background: #3A3A3A;
+    color: white;
+	font-weight:bold;
+}
+
+.loader {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #161616; 
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+		</style>
+	</head>
+	<body>
+		<div class="header">Early Detection of Forest Fires</div>
+		<div class="second">
+			<div class="inside"><a href="#section2"><button  class="myButton" >{{pred}}</button></a>.<br><br><center></center> 
+		<section id="showcase">
+		<br>
+		<div style="margin-left:32.5%">
+		
+		
+		
+		</div>
+		</div>
+		</section>
+		
+		</div>
+		
+
+	</div></div>
+	<script>
+window.onscroll = function() {myFunction()};
+
+$(document).ready(function () {
+    // Init
+    $('.image-section').hide();
+    $('.loader').hide();
+    $('#result').hide();
+
+    // Upload Preview
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#imageUpload").change(function () {
+        $('.image-section').show();
+        $('#btn-predict').show();
+        $('#result').text('');
+        $('#result').hide();
+        readURL(this);
+    });
+
+    // Predict
+    $('#btn-predict').click(function () {
+        var form_data = new FormData($('#upload-file')[0]);
+
+        // Show loading animation
+        $(this).hide();
+        $('.loader').show();
+
+        // Make prediction by calling api /predict
+        $.ajax({
+            type: 'POST',
+            url: '/predict',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            async: true,
+            success: function (data) {
+                // Get and display the result
+                $('.loader').hide();
+                $('#result').fadeIn(600);
+                $('#result').text('Prediction: '+data);
+                console.log('Success!');
+            },
+        });
+    });
+
+});
+</script>
+	
+	
+	
+	</body>
+</html>
